@@ -1,0 +1,29 @@
+{
+  "name": "bb-plugin-workspace-skills",
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "bb": ">=0.43",
+    "bbPluginSdk": ">=0.4.87"
+  },
+  "bb": {
+    "name": "Workspace Skills",
+    "description": "Configurable filesystem paths scanner for project and global skills in BB.",
+    "branding": {
+      "icon": "FolderKanban"
+    },
+    "server": "./server.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test tests/**/*.test.ts"
+  },
+  "dependencies": {
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@get-bb/plugin-sdk": "0.4.87",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}
