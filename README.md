@@ -4,6 +4,8 @@ Configurable filesystem scanner for project and external skills in BB.
 
 Allows users to configure arbitrary filesystem paths (e.g. `Projects/skills`, `Projects/.agents/skills`) in BB Settings or via CLI, automatically discovers skill packages, registers them into BB's shared skill roots (`~/.bb/config.json`), and reloads BB on the fly.
 
+![Workspace Skills Settings in BB](assets/settings.png)
+
 ## Features
 
 - **No Hardcoded Paths**: Configurable via BB Settings UI (**Settings → Plugins → Workspace Skills**) or CLI.
@@ -17,11 +19,11 @@ Allows users to configure arbitrary filesystem paths (e.g. `Projects/skills`, `P
 ### Installation
 
 ```bash
-# Path install:
-bb plugin install /path/to/bb-plugin-workspace-skills --yes
+# Install via Git (auto-tracks compatible semver releases):
+bb plugin install git:https://github.com/VanDalkvist/bb-plugin-workspace-skills.git@^0.1.0 --yes
 
-# Or Git install:
-bb plugin install git:https://github.com/<owner>/bb-plugin-workspace-skills.git --yes
+# Or install from local path:
+bb plugin install /path/to/bb-plugin-workspace-skills --yes
 ```
 
 ### Configuration
