@@ -13,7 +13,7 @@ export default async function plugin(bb: BbPluginApi) {
       label: "Skill Scan Paths",
       description:
         "Newline- or comma-separated filesystem paths (relative to ~ or absolute) to scan for project skills.",
-      default: "Projects/skills\nProjects/.agents/skills",
+      default: "",
       experimental_multiline: true,
     },
     autoDiscover: {
