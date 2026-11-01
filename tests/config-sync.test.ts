@@ -92,5 +92,34 @@ describe("ConfigSync", () => {
         await fs.rm(tmpDir, { recursive: true, force: true });
       }
     });
+
+    it("preserves symlink when configPath is a symlink to another file", async () => {
+      const tmpDir = await fs.mkdtemp(path.join(os.tmpdir(), "bb-config-symlink-test-"));
+      const realConfigPath = path.join(tmpDir, "real-config.json");
+      const symlinkPath = path.join(tmpDir, "symlink-config.json");
+
+      try {
+        await fs.writeFile(realConfigPath, JSON.stringify({ initial: true }), "utf8");
+        await fs.symlink(realConfigPath, symlinkPath);
+
+        const result = await syncWorkspaceSkills({
+          configPath: symlinkPath,
+          discoveredRoots: ["Projects/skills"]
+        });
+
+        assert.equal(result.changed, true);
+
+        // Verify symlink is still a symlink
+        const lstat = await fs.lstat(symlinkPath);
+        assert.equal(lstat.isSymbolicLink(), true);
+
+        // Verify content in real file
+        const content = JSON.parse(await fs.readFile(realConfigPath, "utf8"));
+        assert.equal(content.initial, true);
+        assert.deepEqual(content.sharedSkillRoots.user, ["Projects/skills"]);
+      } finally {
+        await fs.rm(tmpDir, { recursive: true, force: true });
+      }
+    });
   });
 });

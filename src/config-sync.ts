@@ -84,14 +84,15 @@ export async function syncWorkspaceSkills(options: SyncOptions): Promise<SyncRep
   const { updatedConfig, changed } = mergeSharedSkillRoots(existingConfig, discoveredRoots);
 
   if (changed) {
-    const dir = path.dirname(configPath);
+    const resolvedPath = await fs.realpath(configPath).catch(() => configPath);
+    const dir = path.dirname(resolvedPath);
     await fs.mkdir(dir, { recursive: true });
 
     const serialized = JSON.stringify(updatedConfig, null, 2) + "\n";
-    const tempPath = `${configPath}.tmp-${crypto.randomUUID()}`;
+    const tempPath = `${resolvedPath}.tmp-${crypto.randomUUID()}`;
 
     await fs.writeFile(tempPath, serialized, "utf8");
-    await fs.rename(tempPath, configPath);
+    await fs.rename(tempPath, resolvedPath);
 
     if (reloadConfigFn) {
       await reloadConfigFn();
